@@ -59,8 +59,12 @@ function Table() {
         <option value="menor que">menor que</option>
         <option value="igual a">igual a</option>
       </select>
-      <button
+      <input
         data-testid="value-filter"
+        type="number"
+      />
+      <button
+        data-testid="button-filter"
       >
         Filtrar
       </button>
