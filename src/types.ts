@@ -1,4 +1,5 @@
 export type Planet = {
+  [key: string]: any
   name: string;
   rotation_period: string;
   orbital_period: string;

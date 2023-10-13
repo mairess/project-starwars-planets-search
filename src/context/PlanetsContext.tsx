@@ -2,9 +2,14 @@ import { createContext } from 'react';
 import { Planet } from '../types';
 
 type PlanetsContextType = {
-  planets: Planet[];
+  planets: Planet[],
+  setPlanets: (planets: Planet[]) => void,
+  searchTerm: string,
+  setSearchTerm: (term: string) => void,
+  originalPlanets: Planet[],
+  handleFilter: (term: string) => void,
 };
 
-const PlanetsConstext = createContext({} as PlanetsContextType);
+const PlanetsContext = createContext({} as PlanetsContextType);
 
-export default PlanetsConstext;
+export default PlanetsContext;
