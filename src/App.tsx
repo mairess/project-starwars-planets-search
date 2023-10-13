@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './App.css';
-import Table from './components/Tables';
+import Table from './components/Table';
 import PlanetsConstext from './context/PlanetsContext';
 import fetchAPI from './helpers/getPlanets';
 
