@@ -6,6 +6,7 @@ type TextFilterProps = {
 function TextFilter({ value, onChange }: TextFilterProps) {
   return (
     <>
+      <label htmlFor="name">Serach here</label>
       <input
         data-testid="name-filter"
         id="name"
@@ -13,7 +14,6 @@ function TextFilter({ value, onChange }: TextFilterProps) {
         value={ value }
         onChange={ onChange }
       />
-      <label htmlFor="name">Serach here</label>
     </>
   );
 }
