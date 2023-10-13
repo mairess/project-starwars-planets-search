@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import './App.css';
 import Table from './components/Tables';
 import PlanetsConstext from './context/PlanetsContext';
-import fetchAPI from './helpers/fetchAPI';
+import fetchAPI from './helpers/getPlanets';
 
 function App() {
   const [planets, setPlanets] = useState([]);
