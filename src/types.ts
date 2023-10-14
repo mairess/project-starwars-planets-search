@@ -17,3 +17,9 @@ export type Planet = {
 };
 
 export type Planets = Planet[];
+
+export type Filter = {
+  column: string;
+  comparison: string;
+  value: string;
+};

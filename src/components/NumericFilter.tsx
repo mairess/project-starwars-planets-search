@@ -1,5 +1,6 @@
 import { useContext, useState } from 'react';
 import PlanetsContext from '../context/PlanetsContext';
+import { Filter } from '../types';
 
 function NumericFilter() {
   const {
@@ -10,23 +11,38 @@ function NumericFilter() {
   const [selectedColumn, setSelectedColumn] = useState('population');
   const [selectedComparison, setSelectedComparison] = useState('maior que');
   const [filterValue, setFilterValue] = useState('0');
+  const [filters, setFilters] = useState<Filter[]>([]);
 
-  const applyNumericFilter = () => {
-    const filteredPlanets = originalPlanets.filter((planet) => {
-      const value = parseFloat(planet[selectedColumn]);
-      const filter = parseFloat(filterValue);
+  const applyNumericFilter = (filterList: Filter[]) => {
+    let filteredPlanets = originalPlanets;
 
-      if (selectedComparison === 'maior que') {
-        return value > filter;
-      } if (selectedComparison === 'menor que') {
-        return value < filter;
-      } if (selectedComparison === 'igual a') {
-        return value === filter;
-      }
-      return false;
+    filterList.forEach(({ column, comparison, value }) => {
+      filteredPlanets = filteredPlanets.filter((planet) => {
+        const planetValue = parseFloat(planet[column]);
+        const valuefilter = parseFloat(value);
+
+        if (comparison === 'maior que') {
+          return planetValue > valuefilter;
+        } if (comparison === 'menor que') {
+          return planetValue < valuefilter;
+        } if (comparison === 'igual a') {
+          return planetValue === valuefilter;
+        }
+        return true;
+      });
     });
 
     setPlanets(filteredPlanets);
+  };
+
+  const addFilter = () => {
+    const newFilter = {
+      column: selectedColumn,
+      comparison: selectedComparison,
+      value: filterValue,
+    };
+    setFilters([...filters, newFilter]);
+    applyNumericFilter([...filters, newFilter]);
   };
 
   return (
@@ -68,7 +84,7 @@ function NumericFilter() {
 
       <button
         data-testid="button-filter"
-        onClick={ applyNumericFilter }
+        onClick={ addFilter }
       >
         Filtrar
       </button>
