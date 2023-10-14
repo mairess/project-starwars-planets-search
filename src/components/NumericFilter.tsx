@@ -16,6 +16,11 @@ function NumericFilter() {
   const applyNumericFilter = (filterList: Filter[]) => {
     let filteredPlanets = originalPlanets;
 
+    if (!filteredPlanets) {
+      console.error('originalPlanets is undefined');
+      return;
+    }
+
     filterList.forEach(({ column, comparison, value }) => {
       filteredPlanets = filteredPlanets.filter((planet) => {
         const planetValue = parseFloat(planet[column]);
