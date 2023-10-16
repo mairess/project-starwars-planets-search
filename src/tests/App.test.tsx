@@ -1,9 +1,15 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen, waitForElementToBeRemoved } from '@testing-library/react';
 import App from '../App';
 import userEvent from '@testing-library/user-event'
+import { Provider } from 'react';
+import PlanetsProvider from '../context/PlanetsProvider';
 
 test('Verify if inputs are loaded and works as expected.', async () => {
-  render(<App />);
+  render(
+  <PlanetsProvider>
+  <App />
+  </PlanetsProvider>
+  );
   const numericInput = screen.getByTestId('value-filter');
   const selectColumnInput = screen.getByTestId('column-filter');
   const selectComparisonInput = screen.getByTestId('comparison-filter');
