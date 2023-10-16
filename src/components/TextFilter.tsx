@@ -1,9 +1,8 @@
-type TextFilterProps = {
-  value: string,
-  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-};
+import { useContext } from 'react';
+import PlanetsContext from '../context/PlanetsContext';
 
-function TextFilter({ value, onChange }: TextFilterProps) {
+function TextFilter() {
+  const { setSearchTerm, searchTerm } = useContext(PlanetsContext);
   return (
     <>
       <label htmlFor="name">Serach here</label>
@@ -11,8 +10,10 @@ function TextFilter({ value, onChange }: TextFilterProps) {
         data-testid="name-filter"
         id="name"
         type="text"
-        value={ value }
-        onChange={ onChange }
+        value={ searchTerm }
+        onChange={ (event) => {
+          setSearchTerm(event.target.value);
+        } }
       />
     </>
   );

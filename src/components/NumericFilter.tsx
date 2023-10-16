@@ -1,54 +1,43 @@
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import PlanetsContext from '../context/PlanetsContext';
 import { Filter } from '../types';
+import { columnsSelect } from '../helpers/tableColumns';
 
 function NumericFilter() {
   const {
-    setPlanets,
-    originalPlanets,
+    // setPlanets,
+    // originalPlanets,
+
+    numericFilters,
+    addNumericFilter,
+    removeNumericFilter,
   } = useContext(PlanetsContext);
 
   const [selectedColumn, setSelectedColumn] = useState('population');
   const [selectedComparison, setSelectedComparison] = useState('maior que');
   const [filterValue, setFilterValue] = useState('0');
-  const [filters, setFilters] = useState<Filter[]>([]);
+  // const [filters, setFilters] = useState<Filter[]>([]);
 
-  const applyNumericFilter = (filterList: Filter[]) => {
-    let filteredPlanets = originalPlanets;
-
-    if (!filteredPlanets) {
-      console.error('originalPlanets is undefined');
-      return;
-    }
-
-    filterList.forEach(({ column, comparison, value }) => {
-      filteredPlanets = filteredPlanets.filter((planet) => {
-        const planetValue = parseFloat(planet[column]);
-        const valuefilter = parseFloat(value);
-
-        if (comparison === 'maior que') {
-          return planetValue > valuefilter;
-        } if (comparison === 'menor que') {
-          return planetValue < valuefilter;
-        } if (comparison === 'igual a') {
-          return planetValue === valuefilter;
-        }
-        return true;
-      });
-    });
-
-    setPlanets(filteredPlanets);
-  };
-
-  const addFilter = () => {
+  const applyNumericFilter = () => {
     const newFilter = {
       column: selectedColumn,
       comparison: selectedComparison,
       value: filterValue,
     };
-    setFilters([...filters, newFilter]);
-    applyNumericFilter([...filters, newFilter]);
+    addNumericFilter(newFilter);
   };
+
+  const removeFilter = (filter: Filter) => {
+    removeNumericFilter(filter);
+  };
+
+  useEffect(() => {
+    const columnFilters = columnsSelect
+      .filter((column) => !numericFilters.some((filter) => filter.column === column));
+    setSelectedColumn(columnFilters[0]);
+    setSelectedComparison('maior que');
+    setFilterValue('0');
+  }, [numericFilters]);
 
   return (
     <>
@@ -57,14 +46,16 @@ function NumericFilter() {
         data-testid="column-filter"
         name=""
         id="columnFilter"
-        value={ selectedColumn }
+        // value={ selectedColumn }
         onChange={ (e) => setSelectedColumn(e.target.value) }
       >
-        <option value="population">population</option>
-        <option value="orbital_period">orbital_period</option>
-        <option value="diameter">diameter</option>
-        <option value="rotation_period">rotation_period</option>
-        <option value="surface_water">surface_water</option>
+        {columnsSelect
+          .filter((column) => !numericFilters.some((filter) => filter.column === column))
+          .map((column) => (
+            <option key={ column } value={ column }>
+              {column}
+            </option>
+          ))}
       </select>
 
       <label htmlFor="comparisonFilter">Operador</label>
@@ -72,7 +63,7 @@ function NumericFilter() {
         data-testid="comparison-filter"
         name=""
         id="comparisonFilter"
-        value={ selectedComparison }
+        // value={ selectedComparison }
         onChange={ (e) => setSelectedComparison(e.target.value) }
       >
         <option value="maior que">maior que</option>
@@ -89,10 +80,20 @@ function NumericFilter() {
 
       <button
         data-testid="button-filter"
-        onClick={ addFilter }
+        onClick={ applyNumericFilter }
       >
         Filtrar
       </button>
+      {numericFilters.map((filter, index) => (
+        <div key={ index }>
+          {filter.column}
+          {' '}
+          {filter.comparison}
+          {' '}
+          {filter.value}
+          <button onClick={ () => removeFilter(filter) }>Remover</button>
+        </div>
+      ))}
     </>
   );
 }

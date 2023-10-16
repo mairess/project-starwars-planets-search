@@ -13,3 +13,11 @@ export const columns = [
   'Edited',
   'URL',
 ];
+
+export const columnsSelect = [
+  'population',
+  'orbital_period',
+  'diameter',
+  'rotation_period',
+  'surface_water',
+];

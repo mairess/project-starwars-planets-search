@@ -18,22 +18,23 @@ th, td {
 
 function Table() {
   const {
-    planets,
-    setSearchTerm,
+    originalPlanets,
     searchTerm,
     handleFilter,
   } = useContext(PlanetsContext);
 
+  const filteredPlanetsByName = originalPlanets.filter((planet) => {
+    const planetName = planet.name.toLowerCase();
+    const filteredText = searchTerm.toLowerCase();
+    return planetName.includes(filteredText);
+  });
+
+  const filteredPlanetsByNumbers = handleFilter(filteredPlanetsByName);
+
   return (
     <>
       <NumericFilter />
-      <TextFilter
-        value={ searchTerm }
-        onChange={ (event) => {
-          setSearchTerm(event.target.value);
-          handleFilter(event.target.value);
-        } }
-      />
+      <TextFilter />
       <TableStyled>
         <table>
           <thead>
@@ -44,7 +45,7 @@ function Table() {
             </tr>
           </thead>
           <tbody>
-            {planets && planets.map((planet) => (
+            {filteredPlanetsByNumbers.map((planet) => (
               <tr key={ planet.name }>
                 <td>{planet.name}</td>
                 <td>{planet.rotation_period}</td>
