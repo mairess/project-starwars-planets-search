@@ -64,6 +64,10 @@ function PlanetsProvider({ children } :PlanetsProviderProps) {
     return filteredPlanetsByName;
   };
 
+  const removeAllNumericFilters = () => {
+    setNumericFilters([]);
+  };
+
   return (
     <PlanetsContext.Provider
       value={ {
@@ -76,6 +80,7 @@ function PlanetsProvider({ children } :PlanetsProviderProps) {
         numericFilters,
         addNumericFilter,
         removeNumericFilter,
+        removeAllNumericFilters,
       } }
     >
       {children}

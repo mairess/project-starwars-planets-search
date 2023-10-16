@@ -5,18 +5,15 @@ import { columnsSelect } from '../helpers/tableColumns';
 
 function NumericFilter() {
   const {
-    // setPlanets,
-    // originalPlanets,
-
     numericFilters,
     addNumericFilter,
     removeNumericFilter,
+    removeAllNumericFilters,
   } = useContext(PlanetsContext);
 
   const [selectedColumn, setSelectedColumn] = useState('population');
   const [selectedComparison, setSelectedComparison] = useState('maior que');
   const [filterValue, setFilterValue] = useState('0');
-  // const [filters, setFilters] = useState<Filter[]>([]);
 
   const applyNumericFilter = () => {
     const newFilter = {
@@ -46,7 +43,6 @@ function NumericFilter() {
         data-testid="column-filter"
         name=""
         id="columnFilter"
-        // value={ selectedColumn }
         onChange={ (e) => setSelectedColumn(e.target.value) }
       >
         {columnsSelect
@@ -63,7 +59,6 @@ function NumericFilter() {
         data-testid="comparison-filter"
         name=""
         id="comparisonFilter"
-        // value={ selectedComparison }
         onChange={ (e) => setSelectedComparison(e.target.value) }
       >
         <option value="maior que">maior que</option>
@@ -85,7 +80,10 @@ function NumericFilter() {
         Filtrar
       </button>
       {numericFilters.map((filter, index) => (
-        <div key={ index }>
+        <div
+          data-testid="filter"
+          key={ index }
+        >
           {filter.column}
           {' '}
           {filter.comparison}
@@ -94,6 +92,12 @@ function NumericFilter() {
           <button onClick={ () => removeFilter(filter) }>Remover</button>
         </div>
       ))}
+      <button
+        onClick={ removeAllNumericFilters }
+        data-testid="button-remove-filters"
+      >
+        Remover Filtros
+      </button>
     </>
   );
 }

@@ -11,6 +11,7 @@ type PlanetsContextType = {
   numericFilters: Filter[],
   addNumericFilter: (filter: Filter) => void,
   removeNumericFilter: (filter: Filter) => void,
+  removeAllNumericFilters: () => void,
 };
 
 const PlanetsContext = createContext({} as PlanetsContextType);
