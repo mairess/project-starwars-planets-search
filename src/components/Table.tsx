@@ -4,6 +4,7 @@ import PlanetsContext from '../context/PlanetsContext';
 import { columns } from '../helpers/tableColumns';
 import TextFilter from './TextFilter';
 import NumericFilter from './NumericFilter';
+import SortFilter from './SortFilter';
 
 const TableStyled = styled.div`
 table {
@@ -35,6 +36,7 @@ function Table() {
     <>
       <NumericFilter />
       <TextFilter />
+      <SortFilter />
       <TableStyled>
         <table>
           <thead>
@@ -47,7 +49,7 @@ function Table() {
           <tbody>
             {filteredPlanetsByNumbers.map((planet) => (
               <tr key={ planet.name }>
-                <td>{planet.name}</td>
+                <td data-testid="planet-name">{planet.name}</td>
                 <td>{planet.rotation_period}</td>
                 <td>{planet.orbital_period}</td>
                 <td>{planet.diameter}</td>
