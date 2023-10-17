@@ -81,6 +81,7 @@ function PlanetsProvider({ children } :PlanetsProviderProps) {
         addNumericFilter,
         removeNumericFilter,
         removeAllNumericFilters,
+        setOriginalPlanets,
       } }
     >
       {children}

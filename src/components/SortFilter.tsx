@@ -1,13 +1,38 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { columnsSelect } from '../helpers/tableColumns';
+import {
+  orderByOrbitalPeriod,
+  orderByDiameter,
+  orderByPopulation,
+} from '../helpers/planetsUtils';
+import PlanetsContext from '../context/PlanetsContext';
 
 function SortFilter() {
+  const { originalPlanets, setOriginalPlanets } = useContext(PlanetsContext);
   const [sortOrder, setSortOrder] = useState({
     order: {
       column: 'population',
       sort: 'ASC',
     },
   });
+
+  const handleSort = (column: string, sort: string) => {
+    let sortedPlanets = [...originalPlanets];
+
+    if (column === 'orbital_period') {
+      sortedPlanets = orderByOrbitalPeriod(sortedPlanets);
+    } else if (column === 'diameter') {
+      sortedPlanets = orderByDiameter(sortedPlanets);
+    } else if (column === 'population') {
+      sortedPlanets = orderByPopulation(sortedPlanets);
+    }
+
+    if (sort === 'DESC') {
+      sortedPlanets.reverse();
+    }
+
+    setOriginalPlanets(sortedPlanets);
+  };
 
   return (
     <div>
@@ -67,7 +92,10 @@ function SortFilter() {
         />
       </div>
 
-      <button data-testid="column-sort-button">
+      <button
+        onClick={ () => handleSort(sortOrder.order.column, sortOrder.order.sort) }
+        data-testid="column-sort-button"
+      >
         Ordenar
       </button>
     </div>
