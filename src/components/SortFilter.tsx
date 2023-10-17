@@ -1,38 +1,10 @@
 import { useContext, useState } from 'react';
 import { columnsSelect } from '../helpers/tableColumns';
-import {
-  orderByOrbitalPeriod,
-  orderByDiameter,
-  orderByPopulation,
-} from '../helpers/planetsUtils';
 import PlanetsContext from '../context/PlanetsContext';
 
 function SortFilter() {
-  const { originalPlanets, setOriginalPlanets } = useContext(PlanetsContext);
-  const [sortOrder, setSortOrder] = useState({
-    order: {
-      column: 'population',
-      sort: 'ASC',
-    },
-  });
-
-  const handleSort = (column: string, sort: string) => {
-    let sortedPlanets = [...originalPlanets];
-
-    if (column === 'orbital_period') {
-      sortedPlanets = orderByOrbitalPeriod(sortedPlanets);
-    } else if (column === 'diameter') {
-      sortedPlanets = orderByDiameter(sortedPlanets);
-    } else if (column === 'population') {
-      sortedPlanets = orderByPopulation(sortedPlanets);
-    }
-
-    if (sort === 'DESC') {
-      sortedPlanets.reverse();
-    }
-
-    setOriginalPlanets(sortedPlanets);
-  };
+  const { setOrder } = useContext(PlanetsContext);
+  const [sortOrder, setSortOrder] = useState({ column: 'population', sort: 'ASC' });
 
   return (
     <div>
@@ -41,12 +13,11 @@ function SortFilter() {
         <select
           name="column-sort"
           data-testid="column-sort"
+          value={ sortOrder.column }
           onChange={ (event) => {
             setSortOrder({
-              order: {
-                column: event.target.value,
-                sort: sortOrder.order.sort,
-              },
+              column: event.target.value,
+              sort: sortOrder.sort,
             });
           } }
         >
@@ -65,10 +36,8 @@ function SortFilter() {
           id="sort-asc"
           onChange={ () => {
             setSortOrder({
-              order: {
-                column: sortOrder.order.column,
-                sort: 'ASC',
-              },
+              column: sortOrder.column,
+              sort: 'ASC',
             });
           } }
         />
@@ -83,17 +52,15 @@ function SortFilter() {
           id="sort-desc"
           onChange={ () => {
             setSortOrder({
-              order: {
-                column: sortOrder.order.column,
-                sort: 'DESC',
-              },
+              column: sortOrder.column,
+              sort: 'DESC',
             });
           } }
         />
       </div>
 
       <button
-        onClick={ () => handleSort(sortOrder.order.column, sortOrder.order.sort) }
+        onClick={ () => setOrder(sortOrder) }
         data-testid="column-sort-button"
       >
         Ordenar

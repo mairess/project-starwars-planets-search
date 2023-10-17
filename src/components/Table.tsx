@@ -22,6 +22,7 @@ function Table() {
     originalPlanets,
     searchTerm,
     handleFilter,
+    orderPlanets,
   } = useContext(PlanetsContext);
 
   const filteredPlanetsByName = originalPlanets && originalPlanets.filter((planet) => {
@@ -31,6 +32,8 @@ function Table() {
   });
 
   const filteredPlanetsByNumbers = handleFilter(filteredPlanetsByName);
+
+  const orderedPlanets = orderPlanets(filteredPlanetsByNumbers);
 
   return (
     <>
@@ -47,7 +50,7 @@ function Table() {
             </tr>
           </thead>
           <tbody>
-            {filteredPlanetsByNumbers.map((planet) => (
+            {orderedPlanets.map((planet) => (
               <tr key={ planet.name }>
                 <td data-testid="planet-name">{planet.name}</td>
                 <td>{planet.rotation_period}</td>

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Filter, Planet } from '../types';
+import { Filter, Planet, Planets } from '../types';
 import PlanetsContext from './PlanetsContext';
 import getPlanets from '../helpers/getPlanets';
 
@@ -12,6 +12,7 @@ function PlanetsProvider({ children } :PlanetsProviderProps) {
   const [planets, setPlanets] = useState<Planet[]>([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [numericFilters, setNumericFilters] = useState<Filter[]>([]);
+  const [order, setOrder] = useState({ column: '', sort: '' });
 
   const addNumericFilter = (filter: Filter) => {
     setNumericFilters([...numericFilters, filter]);
@@ -68,6 +69,22 @@ function PlanetsProvider({ children } :PlanetsProviderProps) {
     setNumericFilters([]);
   };
 
+  const orderPlanets = (planetsSorted: Planets) => {
+    if (!order.column) return planetsSorted;
+    return planets.sort((a, b) => {
+      if (a[order.column] === 'unknown' && b[order.column] === 'unknown') {
+        return 0;
+      } if (b[order.column] === 'unknown') {
+        return -1;
+      } if (a[order.column] === 'unknown') {
+        return 1;
+      }
+      return order.sort === 'ASC'
+        ? Number(a[order.column]) - Number(b[order.column])
+        : Number(b[order.column]) - Number(a[order.column]);
+    });
+  };
+
   return (
     <PlanetsContext.Provider
       value={ {
@@ -82,6 +99,8 @@ function PlanetsProvider({ children } :PlanetsProviderProps) {
         removeNumericFilter,
         removeAllNumericFilters,
         setOriginalPlanets,
+        orderPlanets,
+        setOrder,
       } }
     >
       {children}
