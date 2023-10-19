@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { Filter, Planet, Planets } from '../types';
+import { Planet, Planets } from '../types';
 import PlanetsContext from './PlanetsContext';
 import useFetch from '../hooks/useFetch';
-import useRemoveNumericFilter from '../hooks/useRemoveNumericFilter';
+import useAddAndRemoveNumericFilter from '../hooks/useAddAndRemoveNumericFilter';
 
 type PlanetsProviderProps = {
   children: React.ReactNode,
@@ -14,16 +14,13 @@ function PlanetsProvider({ children } :PlanetsProviderProps) {
     numericFilters,
     setNumericFilters,
     removeNumericFilter,
-  } = useRemoveNumericFilter();
+    addNumericFilter,
+  } = useAddAndRemoveNumericFilter();
 
   const [originalPlanets, setOriginalPlanets] = useState<Planet[]>([]);
   const [planets, setPlanets] = useState<Planet[]>([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [order, setOrder] = useState({ column: '', sort: '' });
-
-  const addNumericFilter = (filter: Filter) => {
-    setNumericFilters([...numericFilters, filter]);
-  };
 
   useEffect(() => {
     setPlanets(data);

@@ -1,8 +1,12 @@
 import { useState } from 'react';
 import { Filter } from '../types';
 
-const useRemoveNumericFilter = () => {
+const useAddAndRemoveNumericFilter = () => {
   const [numericFilters, setNumericFilters] = useState<Filter[]>([]);
+
+  const addNumericFilter = (filter: Filter) => {
+    setNumericFilters([...numericFilters, filter]);
+  };
 
   const removeNumericFilter = (filter: Filter) => {
     setNumericFilters((prevFilters) => prevFilters.filter((existingFilter) => {
@@ -13,7 +17,7 @@ const useRemoveNumericFilter = () => {
       );
     }));
   };
-  return { numericFilters, setNumericFilters, removeNumericFilter };
+  return { numericFilters, setNumericFilters, removeNumericFilter, addNumericFilter };
 };
 
-export default useRemoveNumericFilter;
+export default useAddAndRemoveNumericFilter;
