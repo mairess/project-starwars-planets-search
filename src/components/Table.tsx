@@ -23,6 +23,8 @@ function Table() {
     searchTerm,
     handleFilter,
     orderPlanets,
+    loading,
+    error,
   } = useContext(PlanetsContext);
 
   const filteredPlanetsByName = originalPlanets && originalPlanets.filter((planet) => {
@@ -50,6 +52,8 @@ function Table() {
             </tr>
           </thead>
           <tbody>
+            {loading && <tr><td>Carregando...</td></tr> }
+            {error && <tr><td>{`Request error: ${error}`}</td></tr> }
             {orderedPlanets.map((planet) => (
               <tr key={ planet.name }>
                 <td data-testid="planet-name">{planet.name}</td>

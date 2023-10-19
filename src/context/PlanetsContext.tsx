@@ -15,6 +15,8 @@ type PlanetsContextType = {
   setOriginalPlanets:(planets: Planet[]) => void,
   orderPlanets: (planetsSorted: Planets) => Planet[]
   setOrder: (sortOrder: { column: string, sort: string }) => void,
+  loading: boolean,
+  error: any,
 };
 
 const PlanetsContext = createContext({} as PlanetsContextType);

@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { Filter, Planet, Planets } from '../types';
 import PlanetsContext from './PlanetsContext';
-import getPlanets from '../helpers/getPlanets';
+import useFetch from '../hooks/useFetch';
 
 type PlanetsProviderProps = {
   children: React.ReactNode,
 };
 
 function PlanetsProvider({ children } :PlanetsProviderProps) {
+  const { data, loading, error } = useFetch('https://swapi.dev/api/planets');
+
   const [originalPlanets, setOriginalPlanets] = useState<Planet[]>([]);
   const [planets, setPlanets] = useState<Planet[]>([]);
   const [searchTerm, setSearchTerm] = useState('');
@@ -30,17 +32,9 @@ function PlanetsProvider({ children } :PlanetsProviderProps) {
   };
 
   useEffect(() => {
-    const fetchPlanets = async () => {
-      try {
-        const planetsData = await getPlanets();
-        setPlanets(planetsData);
-        setOriginalPlanets(planetsData);
-      } catch (error) {
-        console.error('Failed to fetch planets:', error);
-      }
-    };
-    fetchPlanets();
-  }, []);
+    setPlanets(data);
+    setOriginalPlanets(data);
+  }, [data]);
 
   const handleFilter = (filteredPlanetsByName: Planet[]) => {
     if (numericFilters.length) {
@@ -101,6 +95,8 @@ function PlanetsProvider({ children } :PlanetsProviderProps) {
         setOriginalPlanets,
         orderPlanets,
         setOrder,
+        loading,
+        error,
       } }
     >
       {children}
