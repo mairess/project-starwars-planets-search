@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Filter, Planet, Planets } from '../types';
 import PlanetsContext from './PlanetsContext';
 import useFetch from '../hooks/useFetch';
+import useRemoveNumericFilter from '../hooks/useRemoveNumericFilter';
 
 type PlanetsProviderProps = {
   children: React.ReactNode,
@@ -9,26 +10,19 @@ type PlanetsProviderProps = {
 
 function PlanetsProvider({ children } :PlanetsProviderProps) {
   const { data, loading, error } = useFetch('https://swapi.dev/api/planets');
+  const {
+    numericFilters,
+    setNumericFilters,
+    removeNumericFilter,
+  } = useRemoveNumericFilter();
 
   const [originalPlanets, setOriginalPlanets] = useState<Planet[]>([]);
   const [planets, setPlanets] = useState<Planet[]>([]);
   const [searchTerm, setSearchTerm] = useState('');
-  const [numericFilters, setNumericFilters] = useState<Filter[]>([]);
   const [order, setOrder] = useState({ column: '', sort: '' });
 
   const addNumericFilter = (filter: Filter) => {
     setNumericFilters([...numericFilters, filter]);
-  };
-
-  const removeNumericFilter = (filter: Filter) => {
-    const updatedFilters = numericFilters.filter((existingFilter) => {
-      return (
-        existingFilter.column !== filter.column
-        || existingFilter.comparison !== filter.comparison
-        || existingFilter.value !== filter.value
-      );
-    });
-    setNumericFilters(updatedFilters);
   };
 
   useEffect(() => {
