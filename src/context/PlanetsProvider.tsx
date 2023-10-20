@@ -17,14 +17,12 @@ function PlanetsProvider({ children } :PlanetsProviderProps) {
     addNumericFilter,
   } = useAddAndRemoveNumericFilter();
 
-  const [originalPlanets, setOriginalPlanets] = useState<Planet[]>([]);
   const [planets, setPlanets] = useState<Planet[]>([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [order, setOrder] = useState({ column: '', sort: '' });
 
   useEffect(() => {
     setPlanets(data);
-    setOriginalPlanets(data);
   }, [data]);
 
   const handleFilter = (filteredPlanetsByName: Planet[]) => {
@@ -77,13 +75,11 @@ function PlanetsProvider({ children } :PlanetsProviderProps) {
         setPlanets,
         searchTerm,
         setSearchTerm,
-        originalPlanets,
         handleFilter,
         numericFilters,
         addNumericFilter,
         removeNumericFilter,
         removeAllNumericFilters,
-        setOriginalPlanets,
         orderPlanets,
         setOrder,
         loading,

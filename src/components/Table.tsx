@@ -19,7 +19,7 @@ th, td {
 
 function Table() {
   const {
-    originalPlanets,
+    planets,
     searchTerm,
     handleFilter,
     orderPlanets,
@@ -27,7 +27,7 @@ function Table() {
     error,
   } = useContext(PlanetsContext);
 
-  const filteredPlanetsByName = originalPlanets && originalPlanets.filter((planet) => {
+  const filteredPlanetsByName = planets && planets.filter((planet) => {
     const planetName = planet.name.toLowerCase();
     const filteredText = searchTerm.toLowerCase();
     return planetName.includes(filteredText);
