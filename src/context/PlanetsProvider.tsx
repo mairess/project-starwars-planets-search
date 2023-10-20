@@ -3,6 +3,7 @@ import { Planet, Planets } from '../types';
 import PlanetsContext from './PlanetsContext';
 import useFetch from '../hooks/useFetch';
 import useAddAndRemoveNumericFilter from '../hooks/useAddAndRemoveNumericFilter';
+import useHandleFilter from '../hooks/useHandleFilter';
 
 type PlanetsProviderProps = {
   children: React.ReactNode,
@@ -12,10 +13,12 @@ function PlanetsProvider({ children } :PlanetsProviderProps) {
   const { data, loading, error } = useFetch('https://swapi.dev/api/planets');
   const {
     numericFilters,
-    setNumericFilters,
     removeNumericFilter,
     addNumericFilter,
+    setNumericFilters,
   } = useAddAndRemoveNumericFilter();
+
+  const handleFilter = useHandleFilter();
 
   const [planets, setPlanets] = useState<Planet[]>([]);
   const [searchTerm, setSearchTerm] = useState('');
@@ -24,29 +27,6 @@ function PlanetsProvider({ children } :PlanetsProviderProps) {
   useEffect(() => {
     setPlanets(data);
   }, [data]);
-
-  const handleFilter = (filteredPlanetsByName: Planet[]) => {
-    if (numericFilters.length) {
-      const filteredPlanetsWithNumeric = filteredPlanetsByName.filter((planet) => {
-        return numericFilters.every(({ comparison, column, value }) => {
-          const planetValue = parseFloat(planet[column]);
-          const valueFilter = parseFloat(value);
-
-          if (comparison === 'maior que') {
-            return planetValue > valueFilter;
-          } if (comparison === 'menor que') {
-            return planetValue < valueFilter;
-          } if (comparison === 'igual a') {
-            return planetValue === valueFilter;
-          }
-
-          return true;
-        });
-      });
-      return filteredPlanetsWithNumeric;
-    }
-    return filteredPlanetsByName;
-  };
 
   const removeAllNumericFilters = () => {
     setNumericFilters([]);

@@ -19,11 +19,12 @@ th, td {
 `;
 
 function Table() {
-  const { handleFilter, orderPlanets, loading, error } = useContext(PlanetsContext);
+  const { handleFilter, orderPlanets, loading, error,
+    numericFilters } = useContext(PlanetsContext);
 
   const filteredPlanetsByName = useFilteredPlanetsByName();
 
-  const filteredPlanetsByNumbers = handleFilter(filteredPlanetsByName);
+  const filteredPlanetsByNumbers = handleFilter(filteredPlanetsByName, numericFilters);
 
   const orderedPlanets = orderPlanets(filteredPlanetsByNumbers);
 

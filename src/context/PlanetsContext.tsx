@@ -6,7 +6,7 @@ type PlanetsContextType = {
   setPlanets: (planets: Planet[]) => void,
   searchTerm: string,
   setSearchTerm: (term: string) => void,
-  handleFilter: (filteredPlanetsByName: Planet[]) => Planet[],
+  handleFilter: (filteredPlanetsByName: Planet[], filters: Filter[]) => Planet[],
   numericFilters: Filter[],
   addNumericFilter: (filter: Filter) => void,
   removeNumericFilter: (filter: Filter) => void,
