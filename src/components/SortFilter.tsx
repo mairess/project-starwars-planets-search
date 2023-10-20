@@ -1,10 +1,11 @@
-import { useContext, useState } from 'react';
+import { useContext } from 'react';
 import { columnsSelect } from '../helpers/tableColumns';
 import PlanetsContext from '../context/PlanetsContext';
+import useSortOrder from '../hooks/useSortOrder';
 
 function SortFilter() {
   const { setOrder } = useContext(PlanetsContext);
-  const [sortOrder, setSortOrder] = useState({ column: 'population', sort: 'ASC' });
+  const { sortOrder, handleSortChange, handleSortOrderDirection } = useSortOrder();
 
   return (
     <div>
@@ -14,12 +15,7 @@ function SortFilter() {
           name="column-sort"
           data-testid="column-sort"
           value={ sortOrder.column }
-          onChange={ (event) => {
-            setSortOrder({
-              column: event.target.value,
-              sort: sortOrder.sort,
-            });
-          } }
+          onChange={ (event) => handleSortChange(event) }
         >
           {columnsSelect.map((column) => (
             <option key={ column } value={ column }>{column}</option>
@@ -34,12 +30,7 @@ function SortFilter() {
           name="sort"
           value="ASC"
           id="sort-asc"
-          onChange={ () => {
-            setSortOrder({
-              column: sortOrder.column,
-              sort: 'ASC',
-            });
-          } }
+          onChange={ () => handleSortOrderDirection('ASC') }
         />
       </div>
       <div>
@@ -50,12 +41,7 @@ function SortFilter() {
           name="sort"
           value="DESC"
           id="sort-desc"
-          onChange={ () => {
-            setSortOrder({
-              column: sortOrder.column,
-              sort: 'DESC',
-            });
-          } }
+          onChange={ () => handleSortOrderDirection('DESC') }
         />
       </div>
 
