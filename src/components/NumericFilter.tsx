@@ -1,40 +1,17 @@
-import { useContext, useEffect, useState } from 'react';
-import PlanetsContext from '../context/PlanetsContext';
-import { Filter } from '../types';
 import { columnsSelect } from '../helpers/tableColumns';
+import useNumericsFilter from '../hooks/useNumericsFilter';
 
 function NumericFilter() {
   const {
+    setSelectedColumn,
+    setSelectedComparison,
+    filterValue,
+    setFilterValue,
+    applyNumericFilter,
     numericFilters,
-    addNumericFilter,
     removeNumericFilter,
     removeAllNumericFilters,
-  } = useContext(PlanetsContext);
-
-  const [selectedColumn, setSelectedColumn] = useState('population');
-  const [selectedComparison, setSelectedComparison] = useState('maior que');
-  const [filterValue, setFilterValue] = useState('0');
-
-  const applyNumericFilter = () => {
-    const newFilter = {
-      column: selectedColumn,
-      comparison: selectedComparison,
-      value: filterValue,
-    };
-    addNumericFilter(newFilter);
-  };
-
-  const removeFilter = (filter: Filter) => {
-    removeNumericFilter(filter);
-  };
-
-  useEffect(() => {
-    const columnFilters = columnsSelect
-      .filter((column) => !numericFilters.some((filter) => filter.column === column));
-    setSelectedColumn(columnFilters[0]);
-    setSelectedComparison('maior que');
-    setFilterValue('0');
-  }, [numericFilters]);
+  } = useNumericsFilter();
 
   return (
     <>
@@ -89,7 +66,7 @@ function NumericFilter() {
           {filter.comparison}
           {' '}
           {filter.value}
-          <button onClick={ () => removeFilter(filter) }>Remover</button>
+          <button onClick={ () => removeNumericFilter(filter) }>Remover</button>
         </div>
       ))}
       <button
