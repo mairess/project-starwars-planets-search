@@ -3,6 +3,22 @@ import App from '../App';
 import userEvent from '@testing-library/user-event'
 import { Provider } from 'react';
 import PlanetsProvider from '../context/PlanetsProvider';
+import { vi } from 'vitest';
+import testData from './mocks';
+
+beforeEach(() => {
+  vi.spyOn(global, 'fetch');
+
+  (global.fetch as any).mockResolvedValueOnce(
+    {
+      json: vi.fn().mockResolvedValue(testData),
+    }
+  )
+});
+
+afterEach(() => {
+  vi.clearAllMocks();
+});
 
 test('Verify if inputs are loaded and work as expected.', async () => {
   render(
@@ -74,4 +90,18 @@ test('Verify if inputs to remove filter are loaded and work as expected.', async
   await userEvent.click(removeNumericFilter[0]);
   await userEvent.click(removeNumericFilter[1]);
   await userEvent.click(removeNumericFilter[2]);
+});
+
+test('Verify if global fetch was called.', async () => {
+  
+  render(
+  <PlanetsProvider>
+  <App />
+  </PlanetsProvider>
+  );
+
+  
+  await screen.findByText(/tatooine/i);
+  screen.debug();
+  
 });
