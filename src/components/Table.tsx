@@ -5,6 +5,7 @@ import { columns } from '../helpers/tableColumns';
 import TextFilter from './TextFilter';
 import NumericFilter from './NumericFilter';
 import SortFilter from './SortFilter';
+import useFilteredPlanetsByName from '../hooks/useFilteredPlanetsByName';
 
 const TableStyled = styled.div`
 table {
@@ -18,20 +19,9 @@ th, td {
 `;
 
 function Table() {
-  const {
-    planets,
-    searchTerm,
-    handleFilter,
-    orderPlanets,
-    loading,
-    error,
-  } = useContext(PlanetsContext);
+  const { handleFilter, orderPlanets, loading, error } = useContext(PlanetsContext);
 
-  const filteredPlanetsByName = planets && planets.filter((planet) => {
-    const planetName = planet.name.toLowerCase();
-    const filteredText = searchTerm.toLowerCase();
-    return planetName.includes(filteredText);
-  });
+  const filteredPlanetsByName = useFilteredPlanetsByName();
 
   const filteredPlanetsByNumbers = handleFilter(filteredPlanetsByName);
 
