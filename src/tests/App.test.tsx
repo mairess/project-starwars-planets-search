@@ -93,6 +93,7 @@ test('Verify if inputs to remove filter are loaded and work as expected.', async
 });
 
 test('Verify if global fetch was called.', async () => {
+  const mockFetch = vi.spyOn(global, 'fetch')
   
   render(
   <PlanetsProvider>
@@ -100,8 +101,9 @@ test('Verify if global fetch was called.', async () => {
   </PlanetsProvider>
   );
 
+
   
   await screen.findByText(/tatooine/i);
-  screen.debug();
-  
+
+  expect(mockFetch).toHaveBeenCalled()
 });
