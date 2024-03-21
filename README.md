@@ -53,7 +53,7 @@ npm run coverage
 Clone o repositório:
 
 ```JSON
-git clone git@github.com:mairess/project-react-testing-library.git
+git clone git@github.com:mairess/project-starwars-planets-search.git
 ```
 
 Suba o container:
