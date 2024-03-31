@@ -12,19 +12,19 @@ Esse projeto consiste em uma lista de planetas do universo Star Wars, equipada c
 
 Clone o repositório:
 
-```JSON
+```SHELL
 git clone git@github.com:mairess/project-starwars-planets-search.git
 ```
 
 Instale as dependências:
 
-```JSON
+```SHELL
 npm install
 ```
 
 Inicie o vite server:
 
-```JSON
+```SHELL
 npm run dev
 ```
 
@@ -32,13 +32,13 @@ npm run dev
 
 Rode os testes com:
 
-```JSON
+```SHELL
 npm test
 ```
 
 Rode a cobertura dos testes:
 
-```JSON
+```SHELL
 npm run coverage
 ```
 
@@ -52,13 +52,13 @@ npm run coverage
 
 Clone o repositório:
 
-```JSON
+```SHELL
 git clone git@github.com:mairess/project-starwars-planets-search.git
 ```
 
 Suba o container:
 
-```JSON
+```SHELL
 docker compose up -d
 ```
 
