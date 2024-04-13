@@ -1,5 +1,13 @@
 # <p align="center">Projeto Star Wars Planets Search</p>
 
+<div align="center">
+  
+| Statements                  | Branches                | Functions                 | Lines                |
+| --------------------------- | ----------------------- | ------------------------- | -------------------- |
+| ![Statements](https://img.shields.io/badge/Coverage-98.7%25-brightgreen.svg) | ![Branches](https://img.shields.io/badge/Coverage-95.16%25-brightgreen.svg) | ![Functions](https://img.shields.io/badge/Coverage-96.42%25-brightgreen.svg) | ![Lines](https://img.shields.io/badge/Coverage-98.7%25-brightgreen.svg)    |
+
+</div>
+
 ## Contexto
 
 Esse projeto consiste em uma lista de planetas do universo Star Wars, equipada com `filtros`. Para gerenciar os estados globais, são utilizados `Context API`, `Hooks` e `Custom Hooks`. Essas tecnologias permitem um controle eficiente dos estados, facilitando a implementação de filtros e proporcionando uma experiência de usuário mais dinâmica e interativa. Os testes foram escritos `vitest` e `react testing library`. Nessa aplicação é possível adicionar e remover os filtros além de poder ordenar a lista e fazer uma busca pelo nome.
@@ -70,9 +78,23 @@ http://localhost:3000
 
 </details>
 
-### Cobertura
+<details>
 
-![cobertura vitest](coverageVitest.png)
+<summary><strong>Rode os testes</strong></summary><br>
+
+Rode os testes com:
+
+```SHELL
+npm run test
+```
+
+Rode a cobertura:
+
+```SHELL
+npm run coverage
+```
+
+</details>
 
 ## Competências desenvolvidas
 
