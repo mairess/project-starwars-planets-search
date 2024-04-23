@@ -2,9 +2,9 @@
 
 <div align="center">
   
-| Statements                  | Branches                | Functions                 | Lines                |
-| --------------------------- | ----------------------- | ------------------------- | -------------------- |
-| ![Statements](https://img.shields.io/badge/Coverage-98.7%25-brightgreen.svg) | ![Branches](https://img.shields.io/badge/Coverage-95.16%25-brightgreen.svg) | ![Functions](https://img.shields.io/badge/Coverage-96.42%25-brightgreen.svg) | ![Lines](https://img.shields.io/badge/Coverage-98.7%25-brightgreen.svg)    |
+<a href="https://codecov.io/gh/mairess/project-starwars-planets-search" > 
+ <img src="https://codecov.io/gh/mairess/project-starwars-planets-search/graph/badge.svg?token=5RSBJSRT7Y"/> 
+ </a>
 
 </div>
 
